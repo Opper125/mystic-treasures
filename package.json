@@ -1,0 +1,7 @@
+{
+    "name": "mystic-treasures",
+    "version": "1.0.0",
+    "dependencies": {
+        "netlify-lambda": "^2.0.16"
+    }
+}
