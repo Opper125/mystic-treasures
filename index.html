@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Treasures - Slot Game</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Mystic Treasures</h1>
+        <div class="info-bar">
+            <span>Game ID: <span id="gameId"></span></span>
+            <span>Balance: <span id="balance">0 MMK</span></span>
+        </div>
+        <div class="reels">
+            <div class="reel" id="reel1"></div>
+            <div class="reel" id="reel2"></div>
+            <div class="reel" id="reel3"></div>
+        </div>
+        <div class="controls">
+            <button id="spinBtn">လှည့်ပါ (10 MMK)</button>
+            <button onclick="window.location.href='server.html'">ငွေသွင်း/ငွေထုတ်</button>
+            <button onclick="window.location.href='check.html'">မှတ်တမ်းကြည့်ရန်</button>
+        </div>
+    </div>
+    <script src="assets/game.js"></script>
+</body>
+</html>
