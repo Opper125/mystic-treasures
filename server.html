@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ငွေသွင်း/ငွေထုတ်</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>ငွေသွင်း/ငွေထုတ်</h1>
+        <p>Game ID: <span id="gameId"></span></p>
+        <input type="number" id="amount" placeholder="ပမာဏ (MMK)" min="100">
+        <div class="controls">
+            <button onclick="deposit()">ငွေသွင်းမည်</button>
+            <button onclick="withdraw()">ငွေထုတ်မည်</button>
+            <button onclick="window.location.href='index.html'">ဂိမ်းသို့ပြန်သွားရန်</button>
+        </div>
+    </div>
+    <script>
+        const gameId = localStorage.getItem('gameId');
+        document.getElementById('gameId').textContent = gameId;
+
+        function deposit() {
+            const amount = parseInt(document.getElementById('amount').value);
+            if (amount >= 100) {
+                fetch('/.netlify/functions/data', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'deposit', gameId, amount })
+                }).then(() => alert('ငွေသွင်းပြီးပါပြီ။'));
+            } else {
+                alert('အနည်းဆုံး 100 MMK သွင်းပါ။');
+            }
+        }
+
+        function withdraw() {
+            const amount = parseInt(document.getElementById('amount').value);
+            if (amount >= 100) {
+                fetch('/.netlify/functions/data', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'withdraw', gameId, amount })
+                }).then(res => res.json()).then(data => {
+                    if (data.success) alert('ငွေထုတ်ပြီးပါပြီ။');
+                    else alert('Balance မလုံလောက်ပါ။');
+                });
+            } else {
+                alert('အနည်းဆုံး 100 MMK ထုတ်ပါ။');
+            }
+        }
+    </script>
+</body>
+</html>
