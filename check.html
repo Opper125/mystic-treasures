@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>မှတ်တမ်းကြည့်ရန်</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>မှတ်တမ်းကြည့်ရန်</h1>
+        <p>Game ID: <span id="gameId"></span></p>
+        <p>Balance: <span id="balance">0 MMK</span></p>
+        <p>လက်ရှိအချိန်: <span id="currentTime"></span></p>
+        <div class="history" id="history"></div>
+        <div class="controls">
+            <button onclick="window.location.href='index.html'">ဂိမ်းသို့ပြန်သွားရန်</button>
+        </div>
+    </div>
+    <script>
+        const gameId = localStorage.getItem('gameId');
+        document.getElementById('gameId').textContent = gameId;
+
+        function updateTime() {
+            document.getElementById('currentTime').textContent = new Date().toLocaleString('my-MM');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        fetch('/.netlify/functions/data', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'getBalance', gameId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('balance').textContent = `${data.balance || 0} MMK`;
+            document.getElementById('history').innerHTML = data.history.map(h => `<p>${h}</p>`).join('');
+        });
+    </script>
+</body>
+</html>
